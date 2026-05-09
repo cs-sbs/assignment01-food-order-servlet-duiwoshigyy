@@ -24,15 +24,27 @@ public class MenuListServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/plain; charset=UTF-8");
         PrintWriter out = response.getWriter();
-        String name = request.getParameter("name");
+
+        // 关键修复：获取参数并处理所有情况
+        String nameParam = request.getParameter("name");
+        String filter = null;
+
+        if (nameParam != null) {
+            // 去除首尾空格
+            filter = nameParam.trim();
+            // 如果是空字符串，视为无过滤
+            if (filter.isEmpty()) {
+                filter = null;
+            }
+        }
 
         out.println("Menu List:");
         out.println();
 
         int index = 1;
         for (MenuItem item : MENU_ITEMS) {
-            // 空搜索修复：null 或 空字符串 都返回全部菜单
-            if (name == null || name.isBlank() || item.getName().contains(name)) {
+            // 只有当filter不为null时，才进行过滤；否则显示全部
+            if (filter == null || item.getName().contains(filter)) {
                 out.println(index + ". " + item.getName() + " - $" + (int) item.getPrice());
                 index++;
             }
