@@ -12,7 +12,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MenuListServlet extends HttpServlet {
-    // 模拟菜单数据
     private static final List<MenuItem> MENU_ITEMS = new ArrayList<>();
 
     static {
@@ -25,8 +24,6 @@ public class MenuListServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/plain; charset=UTF-8");
         PrintWriter out = response.getWriter();
-
-        // 获取查询参数 name
         String name = request.getParameter("name");
 
         out.println("Menu List:");
@@ -34,8 +31,8 @@ public class MenuListServlet extends HttpServlet {
 
         int index = 1;
         for (MenuItem item : MENU_ITEMS) {
-            // 支持模糊搜索
-            if (name == null || item.getName().contains(name)) {
+            // 空搜索修复：null 或 空字符串 都返回全部菜单
+            if (name == null || name.isBlank() || item.getName().contains(name)) {
                 out.println(index + ". " + item.getName() + " - $" + (int) item.getPrice());
                 index++;
             }

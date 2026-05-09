@@ -15,16 +15,13 @@ public class OrderDetailServlet extends HttpServlet {
         response.setContentType("text/plain; charset=UTF-8");
         PrintWriter out = response.getWriter();
 
-        // 获取路径参数 /1001
         String pathInfo = request.getPathInfo();
 
-        // 异常处理：没有订单ID
         if (pathInfo == null || pathInfo.equals("/")) {
             out.println("Error: Order not found");
             return;
         }
 
-        // 解析ID
         int orderId;
         try {
             orderId = Integer.parseInt(pathInfo.substring(1));
@@ -33,7 +30,6 @@ public class OrderDetailServlet extends HttpServlet {
             return;
         }
 
-        // 查找订单
         Order target = null;
         for (Order o : OrderCreateServlet.orderList) {
             if (o.getOrderId() == orderId) {
@@ -42,13 +38,11 @@ public class OrderDetailServlet extends HttpServlet {
             }
         }
 
-        // 异常处理：订单不存在
         if (target == null) {
             out.println("Error: Order not found");
             return;
         }
 
-        // 返回订单详情
         out.println("Order Detail");
         out.println();
         out.println("Order ID: " + target.getOrderId());

@@ -12,7 +12,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class OrderCreateServlet extends HttpServlet {
-    // 全局订单存储
     public static List<Order> orderList = new ArrayList<>();
 
     @Override
@@ -20,18 +19,17 @@ public class OrderCreateServlet extends HttpServlet {
         response.setContentType("text/plain; charset=UTF-8");
         PrintWriter out = response.getWriter();
 
-        // 获取表单参数
         String customer = request.getParameter("customer");
         String food = request.getParameter("food");
         String quantityStr = request.getParameter("quantity");
 
-        // 异常处理：参数为空
+        // 参数非空校验
         if (customer == null || customer.isBlank() || food == null || food.isBlank() || quantityStr == null || quantityStr.isBlank()) {
             out.println("Error: All fields are required");
             return;
         }
 
-        // 异常处理：数量不是合法数字
+        // 数量合法性校验
         int quantity;
         try {
             quantity = Integer.parseInt(quantityStr);
@@ -48,7 +46,6 @@ public class OrderCreateServlet extends HttpServlet {
         Order order = new Order(customer, food, quantity);
         orderList.add(order);
 
-        // 返回结果
         out.println("Order Created: " + order.getOrderId());
     }
 }
