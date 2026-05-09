@@ -1,7 +1,6 @@
-// src/main/java/cs/sbs/web/servlet/OrderDetailServlet.java
 package cs.sbs.web.servlet;
 
-import cs.sbs.web.model.Order; // 修正包名：cs.sbs.web.model
+import cs.sbs.web.model.Order;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -11,34 +10,50 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 public class OrderDetailServlet extends HttpServlet {
-
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        response.setContentType("text/plain;charset=UTF-8");
+        response.setContentType("text/plain; charset=UTF-8");
         PrintWriter out = response.getWriter();
 
-        // 1. 解析路径参数（/order/1001 → 提取1001）
+        // 获取路径参数 /1001
         String pathInfo = request.getPathInfo();
-        if (pathInfo == null || pathInfo.split("/").length < 2) {
-            out.println("Error: Invalid order ID");
+
+        // 异常处理：没有订单ID
+        if (pathInfo == null || pathInfo.equals("/")) {
+            out.println("Error: Order not found");
             return;
         }
 
-        String orderId = pathInfo.split("/")[1];
-        // 2. 从共享的ORDER_MAP中查询订单（不再自己初始化，保证数据一致）
-        Order order = OrderCreateServlet.ORDER_MAP.get(orderId);
-
-        // 3. 异常处理：查询不到订单
-        if (order == null) {
-            out.println("Error: Order ID " + orderId + " not found");
+        // 解析ID
+        int orderId;
+        try {
+            orderId = Integer.parseInt(pathInfo.substring(1));
+        } catch (Exception e) {
+            out.println("Error: Order not found");
             return;
         }
 
-        // 4. 输出订单详情
+        // 查找订单
+        Order target = null;
+        for (Order o : OrderCreateServlet.orderList) {
+            if (o.getOrderId() == orderId) {
+                target = o;
+                break;
+            }
+        }
+
+        // 异常处理：订单不存在
+        if (target == null) {
+            out.println("Error: Order not found");
+            return;
+        }
+
+        // 返回订单详情
         out.println("Order Detail");
-        out.println("Order ID: " + order.getOrderId());
-        out.println("Customer: " + order.getCustomer());
-        out.println("Food: " + order.getFood());
-        out.println("Quantity: " + order.getQuantity());
+        out.println();
+        out.println("Order ID: " + target.getOrderId());
+        out.println("Customer: " + target.getCustomer());
+        out.println("Food: " + target.getFood());
+        out.println("Quantity: " + target.getQuantity());
     }
 }
