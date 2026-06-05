@@ -2,19 +2,19 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Takeout Order</title>
+    <title>Food Order System</title>
 </head>
 <body>
 <h2>Create Food Order</h2>
-
 <form action="/order" method="post">
     Customer Name: <input type="text" name="customer"><br>
     Food Name: <input type="text" name="food"><br>
-    Quantity: <input type="number" name="quantity"><br>
+    Quantity: <input type="number" name="quantity" min="1"><br>
     <input type="submit" value="Place Order">
 </form>
-
-<br>
-<a href="/order/1001">Order #1001 (Click to view details)</a>
+<hr>
+<p><a href="/menu">Show All Menu</a></p>
+<p><a href="/menu?name=Fried">Search Fried Food</a></p>
+<p>Order #1001 <a href="/order/1001">Click to view details</a></p>
 </body>
 </html>

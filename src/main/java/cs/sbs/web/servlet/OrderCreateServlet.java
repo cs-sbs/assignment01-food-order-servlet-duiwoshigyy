@@ -23,13 +23,11 @@ public class OrderCreateServlet extends HttpServlet {
         String food = request.getParameter("food");
         String quantityStr = request.getParameter("quantity");
 
-        // 参数非空校验
         if (customer == null || customer.isBlank() || food == null || food.isBlank() || quantityStr == null || quantityStr.isBlank()) {
             out.println("Error: All fields are required");
             return;
         }
 
-        // 数量合法性校验
         int quantity;
         try {
             quantity = Integer.parseInt(quantityStr);
@@ -42,7 +40,6 @@ public class OrderCreateServlet extends HttpServlet {
             return;
         }
 
-        // 创建订单
         Order order = new Order(customer, food, quantity);
         orderList.add(order);
 
