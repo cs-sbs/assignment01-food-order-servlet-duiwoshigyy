@@ -4,12 +4,11 @@
          xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_5_0.xsd"
          version="5.0">
 
-    <display-name>外卖订单管理系统</display-name>
-
     <welcome-file-list>
         <welcome-file>order.html</welcome-file>
     </welcome-file-list>
 
+    <!--菜单查询-->
     <servlet>
         <servlet-name>MenuListServlet</servlet-name>
         <servlet-class>cs.sbs.web.servlet.MenuListServlet</servlet-class>
@@ -19,6 +18,7 @@
         <url-pattern>/menu</url-pattern>
     </servlet-mapping>
 
+    <!--创建订单POST-->
     <servlet>
         <servlet-name>OrderCreateServlet</servlet-name>
         <servlet-class>cs.sbs.web.servlet.OrderCreateServlet</servlet-class>
@@ -28,6 +28,7 @@
         <url-pattern>/order</url-pattern>
     </servlet-mapping>
 
+    <!--订单详情路径匹配-->
     <servlet>
         <servlet-name>OrderDetailServlet</servlet-name>
         <servlet-class>cs.sbs.web.servlet.OrderDetailServlet</servlet-class>
@@ -36,5 +37,4 @@
         <servlet-name>OrderDetailServlet</servlet-name>
         <url-pattern>/order/*</url-pattern>
     </servlet-mapping>
-
 </web-app>

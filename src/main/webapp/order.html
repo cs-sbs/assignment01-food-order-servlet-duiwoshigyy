@@ -1,20 +1,22 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>外卖平台 - 首页</title>
+    <title>Food Order System</title>
+    <base href="http://localhost:8080/">
 </head>
 <body>
-<h1>欢迎来外卖平台</h1>
-
-<h2>新增订单</h2>
-
-<form action="/order" method="post">
-    用户: <input name="customer"><br>
-    食物: <input name="food"><br>
-    数量: <input name="quantity"><br>
-    <input type="submit">
+<h2>Create Food Order</h2>
+<form action="order" method="post">
+    Customer Name: <input type="text" name="customer"><br>
+    Food Name: <input type="text" name="food"><br>
+    Quantity: <input type="number" name="quantity" min="1"><br>
+    <input type="submit" value="Place Order">
 </form>
 
+<hr>
+<p><a href="menu">Show All Menu</a></p>
+<p><a href="menu?name=Fried">Search Fried Food</a></p>
+<p>Order #1001 <a href="order/1001">Click to view details</a></p>
 </body>
 </html>
